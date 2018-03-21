@@ -14,3 +14,10 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::get('/empleados', 'EmpleadoController@index');
+
+Route::get('/empleados/create', 'EmpleadoController@create');
+
+Route::post('/empleados/store', 'EmpleadoController@store');
