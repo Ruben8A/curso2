@@ -15,8 +15,12 @@
 			<td>{!! $usuario->paterno !!}
 			{!! $usuario->materno !!}
 			{!! $usuario->nombre !!}</td>
-			<td><button>Editar</button>
-				<button>Eliminar</button></td>
+			<td>
+				<a href="/empleados/{!!$usuario->id!!}/edit">editar</a>
+				{!! Form::open(['route'=>['empleados.destroy',$usuario->id],'method' => 'DELETE'])!!}
+				{!! Form::submit('Eliminar',['class' => 'btn btn-xs btn-danger'])!!}
+
+				{!!Form::close()!!}
 		</tr>
 		@endforeach
 	</tbody>

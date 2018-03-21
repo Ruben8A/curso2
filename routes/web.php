@@ -16,8 +16,10 @@ Route::get('/', function () {
 });
 
 
-Route::get('/empleados', 'EmpleadoController@index');
+/*Route::get('/empleados', 'EmpleadoController@index');
 
 Route::get('/empleados/create', 'EmpleadoController@create');
 
-Route::post('/empleados/store', 'EmpleadoController@store');
+Route::post('/empleados/store', 'EmpleadoController@store');*/
+
+Route::resource('/empleados','EmpleadoController');

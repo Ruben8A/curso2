@@ -56,17 +56,24 @@ class EmpleadoController extends Controller
 
         ]);
 //dd($request->toArray());
-        $empleado = new Empleado($request->all());
+        //$empleado = new Empleado($request->all());
+
+        $empleado = new Empleado();
         
-        /*$empleado->matricula = $request->input['matricula'];
-        $empleado->paterno = $request->input['paterno'];
-        $empleado->materno = $request->input['materno'];
-        $empleado->nombre = $request->input['nombre'];*/
+        $empleado->matricula = $request->input('matricula');
+        $empleado->paterno = $request->input('paterno');
+        $empleado->materno = $request->input('materno');
+        $empleado->nombre = $request->input('nombre');
+        $empleado->fecha_nacimiento = $request->input('fecha_nacimiento');
+        $empleado->sexo = $request->input('sexo');
+        $empleado->id_turno = $request->input('id_turno');
+        $empleado->id_departamento = $request->input('id_departamento');
+
 
         $empleado->save();        
 
 
-
+        return $this->index();
 
 
         //---------------------------
@@ -100,8 +107,19 @@ class EmpleadoController extends Controller
     public function edit($id)
     {
         //
+            $empleado = Empleado::find($id);
+        $sexos = array('HOMBRE' => 'HOMBRE',
+                        'MUJER' => 'MUJER');
 
-        $empleado = Empleado::find($id);
+        $turnos = Turno::all()->pluck('descripcion','id');
+        $departamentos = Departamento::all()->pluck('descripcion','id');
+        return view('empleados.edit',['empleado' => $empleado, 'sexos' => $sexos, 'turnos' => $turnos, 'departamento' => $departamentos]);
+
+        
+
+        //return view('empleados.edit',['empleado'=>$empleado]);
+
+        //return view('empleados.edit',compact('empleado','sexo','turnos','departamentos'))
     }
 
     /**
@@ -114,6 +132,21 @@ class EmpleadoController extends Controller
     public function update(Request $request, $id)
     {
         //
+
+        $empleado =  Empleado::find($id);
+        
+        $empleado->matricula = $request->input('matricula');
+        $empleado->paterno = $request->input('paterno');
+        $empleado->materno = $request->input('materno');
+        $empleado->nombre = $request->input('nombre');
+        $empleado->fecha_nacimiento = $request->input('fecha_nacimiento');
+        $empleado->sexo = $request->input('sexo');
+        $empleado->id_turno = $request->input('id_turno');
+        $empleado->id_departamento = $request->input('id_departamento');
+
+
+        $empleado->save();
+        return $this->index();
     }
 
     /**
@@ -125,5 +158,10 @@ class EmpleadoController extends Controller
     public function destroy($id)
     {
         //
+        $empleado =  Empleado::find($id);
+
+        $empleado->delete();
+
+        return $this->index();
     }
 }
